@@ -3,7 +3,7 @@ title: "Cassandra"
 date: 2025-10-18 
 categories: [Literature, Poetry]
 tags: [Poetry I wrote]
-description: "A poem I wrote after reading a story"
+description: "A poem I wrote"
 ---
 # Cassandra
 
@@ -36,7 +36,9 @@ Cursed insight to an unfair life.
 
 ~Fortune
 
-_[[This poem is inspired by the Trojan priestess named Cassandra. Cassandra was given the gift of prophecy by the god, Apollo. 
+_[[This poem is inspired by the Trojan priestess named Cassandra. Cassandra was given the gift of prophecy by the god Apollo. 
 But she was cursed so that her prophecy wouldn't be believed. She predicted the fall of Troy, but her voice fell on deaf ears. 
-Then during the sack of troy, she was horribly assaulted in the temple of athena and given away as a ‘war gift’ to King Agamemnon. 
-On arrival at Mycenea, she was killed by Agamemnon’s wife, Clymenestra, who was vengeful as a result of Agamemnon sacrificing her daughter.]]_
+Then during the sack of troy, she was horribly assaulted in the temple of Athena and given away as a ‘war gift’ to King Agamemnon. 
+On arrival at Mycenae, she was killed by Agamemnon’s wife, Clytemnestra, who was vengeful as a result of Agamemnon sacrificing her daughter. I initially 
+wanted to write about Clytemnestra; in fact, I did a few days' worth of research but for some reason I changed my mind the day I was writing and just churned this 
+out.]]_
