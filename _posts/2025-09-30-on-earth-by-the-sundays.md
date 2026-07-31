@@ -3,7 +3,7 @@ title: "On Earth by The Sundays"
 date: 2025-09-30 
 categories: [Music, Lyrics]
 tags: [A song I like]
-description: "Selection from 'On Earth' by The Sundays."
+description: "'On Earth' by The Sundays."
 ---
 ## On earth by the sundays
 And she's walking on the edge of a knife \
