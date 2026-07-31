@@ -51,7 +51,9 @@ Some of my favourite things to talk about:
 
 ###  [nano-PLM](https://github.com/bluepeach1121/nano-PLM)
 
-A small protein masked-language-model project built to explore the complete training pipeline: residue tokenisation, sequence batching, bidirectional attention, and modern optimisation.
+A small protein masked-language-model project built to explore \
+the complete training pipeline: residue tokenisation, sequence batching, \
+bidirectional attention, and modern optimisation.
 
 **Ideas:** PyTorch, protein sequences, Transformers, RoPE, and Muon.
 
@@ -60,9 +62,11 @@ A small protein masked-language-model project built to explore the complete trai
 
 ###  [Runge–Kutta Optimisers](https://github.com/bluepeach1121/runge-kutta-optimizers-mnist)
 
-An experimental comparison of AdamW, Muon + AdamW, and preconditioned RK4 on MNIST, viewing neural-network training through gradient flow and numerical integration.
+An experimental comparison of AdamW, Muon + AdamW, and preconditioned RK4 on MNIST, \
+viewing neural-network training through gradient flow and numerical integration.
 
-**Finding:** Higher-order integration alone does not guarantee better optimisation; the batch regime matters considerably.
+**Finding:** Higher-order integration alone does not guarantee better optimisation;  
+the batch regime matters considerably.
 
 </td>
 </tr>
@@ -72,7 +76,8 @@ An experimental comparison of AdamW, Muon + AdamW, and preconditioned RK4 on MNI
 
 ###  [Flow Matching](https://github.com/bluepeach1121/flowmatching)
 
-A compact implementation for understanding how a learned vector field can transport samples from a simple distribution towards a target distribution.
+A compact implementation for understanding how a learned vector field can transport samples \
+from a simple distribution towards a target distribution.
 
 **Focus:** Learning by implementing, visualising, and testing the underlying dynamics.
 
@@ -81,7 +86,8 @@ A compact implementation for understanding how a learned vector field can transp
 
 ###  [SRFBN-S ×4 Super-Resolution](https://github.com/bluepeach1121/SRFBN-S-x4)
 
-An implementation of a feedback network for ×4 image super-resolution, trained on DIV2K and evaluated on Urban100.
+An implementation of a feedback network for ×4 image super-resolution, \
+trained on DIV2K and evaluated on Urban100.
 
 **Lesson:** Always inspect AI-generated code carefully.
 
@@ -102,7 +108,8 @@ An overfitted graph neural network for predicting molecular solubility from atom
 
 ###  Okanagan Rover Craft Club
 
-Currently working on machine-learning development and version control for a student rover team preparing for the Canadian International Rover Challenge.
+Currently working on machine-learning development and version control  
+for a student rover team preparing for the Canadian International Rover Challenge.
 
 **Systems:** ROS 2, cameras, NVIDIA Jetson, and robotics.
 
