@@ -3,11 +3,7 @@ title: About
 icon: fas fa-info-circle
 order: 4
 ---
----
-title: About
-icon: fas fa-info-circle
-order: 4
----
+
 <div align="center" markdown="1">
 
 # Hi, I'm Fortune Olawale
