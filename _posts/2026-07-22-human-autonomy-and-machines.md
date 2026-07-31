@@ -8,7 +8,7 @@ description: "Quick Thoughts on autonomy in the present era"
 
 # **Human Autonomy and Machines: Evolution in hindsight**
 
-~~_debt to machines, death of experience._
+> ~~_debt to machines, death of experience._
 
 Autonomy. Rational agents. Independent thought. Phrases whose definition would increasingly be dissected under the restless knife of the human mind. 
 Our surgical inquiry into these concepts has been further accelerated by the evolution of human-AI interactions in recent years (circa 2017) and even more so, 
