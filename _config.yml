@@ -19,7 +19,7 @@ title: Fortune Olawale # the main title
 tagline: A collection of thoughts. # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-Essays, technical notes, and reflections on machine learning,
+  Essays, technical notes, and reflections on machine learning,
   mathematics, electronics, literature, computing, and music.
 
 # Fill in the protocol & hostname for your site.
@@ -191,7 +191,7 @@ defaults:
       type: posts
     values:
       layout: post
-      comments: False # Enable comments in posts.
+      comments: false # Enable comments in posts.
       toc: true # Display TOC column in posts.
       # DO NOT modify the following parameter unless you are confident enough
       # to update the code of all other post links in this project.
