@@ -17,33 +17,19 @@ A few months ago, I read the [jax-ml](https://jax-ml.github.io/scaling-book/) an
 All continuous diffusion models such as [DDPMs](https://arxiv.org/abs/2006.11239) use a forward process that gradually destroys information by adding Gaussian noise. If $x_0$ is a clean data sample, the marginal distribution at timestep $t$ can be written as
 
 $$
-q(x_t \mid x_0)
-=
-\mathcal{N}\!\left(
-    x_t;
-    \sqrt{\bar{\alpha}_t}\,x_0,
-    (1-\bar{\alpha}_t)I
-\right),
+q(x_t \mid x_0) = \mathcal{N}\!\left( x_t; \sqrt{\bar{\alpha}_t}\,x_0, (1-\bar{\alpha}_t)I \right),
 $$
 
 where
 
 $$
-\alpha_t = 1-\beta_t,
-\qquad
-\bar{\alpha}_t = \prod_{s=1}^{t}\alpha_s,
+\alpha_t = 1-\beta_t, \qquad \bar{\alpha}_t = \prod_{s=1}^{t}\alpha_s,
 $$
 
 and $\beta_t$ controls the amount of noise added at step $t$. Equivalently, we can sample $x_t$ directly as
 
 $$
-x_t
-=
-\sqrt{\bar{\alpha}_t}\,x_0
-+
-\sqrt{1-\bar{\alpha}_t}\,\epsilon,
-\qquad
-\epsilon\sim\mathcal{N}(0,I).
+x_t = \sqrt{\bar{\alpha}_t}\,x_0 + \sqrt{1-\bar{\alpha}_t}\,\epsilon, \qquad \epsilon\sim\mathcal{N}(0,I).
 $$
 
  $\bar{\alpha}_t$ measures how much signal from $x_0$ survives after $t$ noising steps. For a more detailed derivation of continuous diffusion, see [Weng (2021)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). 
@@ -53,9 +39,7 @@ Given its dicrete nature, text is different. A token is not a point in a continu
 A general discrete transition can be written as
 
 $$
-q(z_t\mid z_{t-1})
-=
-\operatorname{Cat}(z_t; Q_t z_{t-1}),
+q(z_t\mid z_{t-1}) = \operatorname{Cat}(z_t; Q_t z_{t-1}),
 $$
 
 where $Q_t$ is a transition matrix over the vocabulary. This idea is the building block of [D3PMs](https://arxiv.org/abs/2107.03006).
@@ -63,12 +47,7 @@ where $Q_t$ is a transition matrix over the vocabulary. This idea is the buildin
 For the masked-diffusion case, a particularly useful marginal is the one used by [masked diffusion language models](https://arxiv.org/abs/2406.07524):
 
 $$
-q(z_t\mid x)
-=
-\operatorname{Cat}\!\left(
-    z_t;
-    \alpha_t x + (1-\alpha_t)\pi
-\right),
+q(z_t\mid x) = \operatorname{Cat}\!\left( z_t; \alpha_t x + (1-\alpha_t)\pi \right),
 $$
 
 where $x$ is the clean token represented as a one-hot vector, $\pi$ is the terminal noise distribution, and $\alpha_t$ is now the probability that the clean token survives at noise level $t$. See [Remasking Discrete Diffusion Models with Inference-Time Scaling, Wang et al](https://arxiv.org/abs/2503.00307)
@@ -81,12 +60,7 @@ where $x$ is the clean token represented as a one-hot vector, $\pi$ is the termi
 For timestep $s<t$, the transition between noisy states is
 
 $$
-q(z_t\mid z_s)
-=
-\operatorname{Cat}\!\left(
-    z_t;
-    \alpha_{t\mid s}z_s + (1-\alpha_{t\mid s})\pi
-\right),
+q(z_t\mid z_s) = \operatorname{Cat}\!\left( z_t; \alpha_{t\mid s}z_s + (1-\alpha_{t\mid s})\pi \right),
 $$
 
 with
@@ -104,18 +78,13 @@ $$
 So the continuous Gaussian interpolation
 
 $$
-\mathcal{N}\!\left(
-\sqrt{\bar\alpha_t}x_0,
-(1-\bar\alpha_t)I
-\right)
+\mathcal{N}\!\left( \sqrt{\bar\alpha_t}x_0, (1-\bar\alpha_t)I \right)
 $$
 
 has a discrete analogue of the form
 
 $$
-\operatorname{Cat}\!\left(
-\alpha_t x_0 + (1-\alpha_t)\pi
-\right).
+\operatorname{Cat}\!\left( \alpha_t x_0 + (1-\alpha_t)\pi \right).
 $$
 
 ---
@@ -127,34 +96,19 @@ This section borrows from [Simple and Effective Masked Diffusion Language Models
 Suppose the vocabulary contains $K$ possible states. Represent one token as a one-hot vector
 
 $$
-x\in\mathcal{V},
-\qquad
-\mathcal{V}
-=
-\left\{
-    x\in\{0,1\}^K:
-    \sum_{i=1}^{K}x_i=1
-\right\}.
+x\in\mathcal{V}, \qquad \mathcal{V} = \left\{ x\in\{0,1\}^K: \sum_{i=1}^{K}x_i=1 \right\}.
 $$
 
 A model prediction, however, is generally not one-hot. It is a probability vector in the simplex
 > Note: A probablity simplex is the set of all valid probablity vectors over the vocabulary bank
 $$
-\Delta^K
-=
-\left\{
-    p\in\mathbb{R}^K:
-    p_i\ge 0,
-    \sum_{i=1}^{K}p_i=1
-\right\}.
+\Delta^K = \left\{ p\in\mathbb{R}^K: p_i\ge 0, \sum_{i=1}^{K}p_i=1 \right\}.
 $$
 
 For example, 
 
 $$
-x_0 = (0,1,0,0,0),
-\qquad
-\alpha_t=0.5,
+x_0 = (0,1,0,0,0), \qquad \alpha_t=0.5,
 $$
 
 and let the last vocabulary entry be the special mask state
@@ -166,17 +120,13 @@ $$
 Then masked diffusion gives
 
 $$
-q(z_t\mid x_0)
-=
-\operatorname{Cat}\!\left(z_t;0.5x_0+0.5m\right),
+q(z_t\mid x_0) = \operatorname{Cat}\!\left(z_t;0.5x_0+0.5m\right),
 $$
 
 so
 
 $$
-0.5x_0+0.5m
-=
-(0,0.5,0,0,0.5).
+0.5x_0+0.5m = (0,0.5,0,0,0.5).
 $$
 
 The token is therefore either still equal to the original token or has become `[MASK]`.
@@ -194,22 +144,13 @@ $$
 The forward marginal becomes
 
 $$
-q(z_t\mid x_0)
-=
-\operatorname{Cat}\!\left(
-    z_t;
-    \alpha_t x_0+(1-\alpha_t)m
-\right).
+q(z_t\mid x_0) = \operatorname{Cat}\!\left( z_t; \alpha_t x_0+(1-\alpha_t)m \right).
 $$
 
 Equivalently,
 
 $$
-z_t=
-\begin{cases}
-x_0, & \text{with probability }\alpha_t,\\[4pt]
-m, & \text{with probability }1-\alpha_t.
-\end{cases}
+z_t= \begin{cases} x_0, & \text{with probability }\alpha_t,\\[4pt] m, & \text{with probability }1-\alpha_t. \end{cases}
 $$
 
 Once a token is masked in the forward process, it stays masked at later, noisier times. This is why masking is also called an absorbing-state diffusion process.
@@ -217,18 +158,13 @@ Once a token is masked in the forward process, it stays masked at later, noisier
 For a sequence of $S$ tokens,
 
 $$
-x_0^{1:S}
-=
-\left(x_0^{(1)},\ldots,x_0^{(S)}\right),
+x_0^{1:S} = \left(x_0^{(1)},\ldots,x_0^{(S)}\right),
 $$
 
 the forward corruption is usually applied independently across positions:
 
 $$
-q\!\left(z_t^{1:S}\mid x_0^{1:S}\right)
-=
-\prod_{i=1}^{S}
-q\!\left(z_t^{(i)}\mid x_0^{(i)}\right).
+q\!\left(z_t^{1:S}\mid x_0^{1:S}\right) = \prod_{i=1}^{S} q\!\left(z_t^{(i)}\mid x_0^{(i)}\right).
 $$
 
 [LLaDA](https://arxiv.org/abs/2502.09992) uses a simple schedule: the continuous time variable $t\in[0,1]$ is itself the masking probability. In our notation,
@@ -240,12 +176,7 @@ $$
 Thus, for each token position $i$,
 
 $$
-q\!\left(z_t^{(i)}\mid x_0^{(i)}\right)
-=
-\begin{cases}
-1-t, & z_t^{(i)}=x_0^{(i)},\\[4pt]
-t, & z_t^{(i)}=m.
-\end{cases}
+q\!\left(z_t^{(i)}\mid x_0^{(i)}\right) = \begin{cases} 1-t, & z_t^{(i)}=x_0^{(i)},\\[4pt] t, & z_t^{(i)}=m. \end{cases}
 $$
 
 At $t=0$ the sequence is clean, while at $t=1$ it is fully masked.
@@ -285,10 +216,7 @@ $$
 and at every earlier time $s<t$ it must be the same token. Hence
 
 $$
-q(z_s\mid z_t,x_0)
-=
-\delta_{z_t}(z_s),
-\qquad z_t\neq m,
+q(z_s\mid z_t,x_0) = \delta_{z_t}(z_s), \qquad z_t\neq m,
 $$
 
 where $\delta_{z_t}$ is a point mass at $z_t$.
@@ -308,9 +236,7 @@ At time $s$, the token could either already have been visible or still have been
 The probability that it was clean at $s$ but masked by $t$ is
 
 $$
-P(z_s=x_0,z_t=m\mid x_0)
-=
-\alpha_s-\alpha_t.
+P(z_s=x_0,z_t=m\mid x_0) = \alpha_s-\alpha_t.
 $$
 
 The probability that it is masked at time $t$ is
@@ -322,48 +248,25 @@ $$
 Using Bayes' rule,
 
 $$
-P(z_s=x_0\mid z_t=m,x_0)
-=
-\frac{\alpha_s-\alpha_t}{1-\alpha_t}.
+P(z_s=x_0\mid z_t=m,x_0) = \frac{\alpha_s-\alpha_t}{1-\alpha_t}.
 $$
 
 Similarly,
 
 $$
-P(z_s=m\mid z_t=m,x_0)
-=
-\frac{1-\alpha_s}{1-\alpha_t}.
+P(z_s=m\mid z_t=m,x_0) = \frac{1-\alpha_s}{1-\alpha_t}.
 $$
 
 Therefore
 
 $$
-q(z_s\mid z_t=m,x_0)
-=
-\operatorname{Cat}\!\left(
-    z_s;
-    \frac{\alpha_s-\alpha_t}{1-\alpha_t}x_0
-    +
-    \frac{1-\alpha_s}{1-\alpha_t}m
-\right).
+q(z_s\mid z_t=m,x_0) = \operatorname{Cat}\!\left( z_s; \frac{\alpha_s-\alpha_t}{1-\alpha_t}x_0 + \frac{1-\alpha_s}{1-\alpha_t}m \right).
 $$
 
 Putting the two cases together,
 
 $$
-q(z_s\mid z_t,x_0)
-=
-\begin{cases}
-\delta_{z_t}(z_s),
-& z_t\neq m,\\[8pt]
-\operatorname{Cat}\!\left(
-    z_s;
-    \dfrac{\alpha_s-\alpha_t}{1-\alpha_t}x_0
-    +
-    \dfrac{1-\alpha_s}{1-\alpha_t}m
-\right),
-& z_t=m.
-\end{cases}
+q(z_s\mid z_t,x_0) = \begin{cases} \delta_{z_t}(z_s), & z_t\neq m,\\[8pt] \operatorname{Cat}\!\left( z_s; \dfrac{\alpha_s-\alpha_t}{1-\alpha_t}x_0 + \dfrac{1-\alpha_s}{1-\alpha_t}m \right), & z_t=m. \end{cases}
 $$
 
 This is the key posterior behind masked diffusion language models.
@@ -377,58 +280,37 @@ During generation, $x_0$ is unknown.
 So we train a Transformer to predict a distribution over possible clean tokens. At position $i$,
 
 $$
-p_\theta\!\left(x_0^{(i)}\mid z_t,t\right)
-\in\Delta^K.
+p_\theta\!\left(x_0^{(i)}\mid z_t,t\right) \in\Delta^K.
 $$
 
 For example, the network could output
 
 $$
-p_\theta\!\left(x_0^{(i)}\mid z_t,t\right)
-=
-\begin{cases}
-0.7, & x_0^{(i)}=\texttt{cat},\\
-0.2, & x_0^{(i)}=\texttt{dog},\\
-0.1, & x_0^{(i)}=\texttt{clean}.
-\end{cases}
+p_\theta\!\left(x_0^{(i)}\mid z_t,t\right) = \begin{cases} 0.7, & x_0^{(i)}=\texttt{cat},\\ 0.2, & x_0^{(i)}=\texttt{dog},\\ 0.1, & x_0^{(i)}=\texttt{clean}. \end{cases}
 $$
 
 The learned reverse transition averages the exact posterior over the model's uncertainty about the clean token:
 
 $$
-p_\theta(z_s^{(i)}\mid z_t)
-=
-\sum_{x_0^{(i)}}
-q\!\left(z_s^{(i)}\mid z_t^{(i)},x_0^{(i)}\right)
-\,
-p_\theta\!\left(x_0^{(i)}\mid z_t,t\right).
+p_\theta(z_s^{(i)}\mid z_t) = \sum_{x_0^{(i)}} q\!\left(z_s^{(i)}\mid z_t^{(i)},x_0^{(i)}\right) \, p_\theta\!\left(x_0^{(i)}\mid z_t,t\right).
 $$
 
 If $z_t^{(i)}=m$, define
 
 $$
-r_{s,t}
-=
-\frac{\alpha_s-\alpha_t}{1-\alpha_t}.
+r_{s,t} = \frac{\alpha_s-\alpha_t}{1-\alpha_t}.
 $$
 
 Then, for any vocabulary token $v\neq m$,
 
 $$
-p_\theta(z_s^{(i)}=v\mid z_t)
-=
-r_{s,t}\,
-p_\theta\!\left(x_0^{(i)}=v\mid z_t,t\right),
+p_\theta(z_s^{(i)}=v\mid z_t) = r_{s,t}\, p_\theta\!\left(x_0^{(i)}=v\mid z_t,t\right),
 $$
 
 while
 
 $$
-p_\theta(z_s^{(i)}=m\mid z_t)
-=
-1-r_{s,t}
-=
-\frac{1-\alpha_s}{1-\alpha_t}.
+p_\theta(z_s^{(i)}=m\mid z_t) = 1-r_{s,t} = \frac{1-\alpha_s}{1-\alpha_t}.
 $$
 
 Using the example above, if $r_{s,t}=0.4$, then
@@ -472,18 +354,7 @@ Note: $\max_{\theta} \mathrm{ELBO} \Leftrightarrow \min_{\theta} \mathrm{NELBO}$
 For a discretized diffusion process, a generic form is
 
 $$
-\mathcal{L}_{\mathrm{NELBO}}
-=
-\mathbb{E}_q\!\left[
-    -\log p_\theta(x_0\mid z_0)
-    +
-    \sum_{k=1}^{K}
-    D_{\mathrm{KL}}\!\left(
-        q(z_{s_k}\mid z_{t_k},x_0)
-        \,\|\,
-        p_\theta(z_{s_k}\mid z_{t_k})
-    \right)
-\right],
+\mathcal{L}_{\mathrm{NELBO}} = \mathbb{E}_q\!\left[ -\log p_\theta(x_0\mid z_0) + \sum_{k=1}^{K} D_{\mathrm{KL}}\!\left( q(z_{s_k}\mid z_{t_k},x_0) \,\|\, p_\theta(z_{s_k}\mid z_{t_k}) \right) \right],
 $$
 
 where $s_k<t_k$ are adjacent reverse-time points. A prior-matching term can also appear in the general ELBO, but for fully masked diffusion it vanishes when the terminal distribution is chosen to match the all-mask prior.
@@ -491,17 +362,7 @@ where $s_k<t_k$ are adjacent reverse-time points. A prior-matching term can also
 For masked diffusion, the KL terms simplify. Written as a positive cross-entropy loss, the discrete objective has the form
 
 $$
-\mathcal{L}_{K}
-=
-\mathbb{E}\!\left[
-\sum_{k=1}^{K}
-\frac{\alpha_{s_k}-\alpha_{t_k}}{1-\alpha_{t_k}}
-\sum_{i=1}^{S}
-\mathbf{1}\!\left[z_{t_k}^{(i)}=m\right]
-\left(
-    -\log p_\theta\!\left(x_0^{(i)}\mid z_{t_k},t_k\right)
-\right)
-\right].
+\mathcal{L}_{K} = \mathbb{E}\!\left[ \sum_{k=1}^{K} \frac{\alpha_{s_k}-\alpha_{t_k}}{1-\alpha_{t_k}} \sum_{i=1}^{S} \mathbf{1}\!\left[z_{t_k}^{(i)}=m\right] \left( -\log p_\theta\!\left(x_0^{(i)}\mid z_{t_k},t_k\right) \right) \right].
 $$
 
 Only masked positions contribute to the loss.
@@ -509,50 +370,26 @@ Only masked positions contribute to the loss.
 Taking the continuous-time limit gives
 
 $$
-\mathcal{L}_{\infty}
-=
-\mathbb{E}\!\left[
-\int_0^1
-\frac{-\alpha_t'}{1-\alpha_t}
-\sum_{i=1}^{S}
-\mathbf{1}\!\left[z_t^{(i)}=m\right]
-\left(
-    -\log p_\theta\!\left(x_0^{(i)}\mid z_t,t\right)
-\right)
-\,dt
-\right].
+\mathcal{L}_{\infty} = \mathbb{E}\!\left[ \int_0^1 \frac{-\alpha_t'}{1-\alpha_t} \sum_{i=1}^{S} \mathbf{1}\!\left[z_t^{(i)}=m\right] \left( -\log p_\theta\!\left(x_0^{(i)}\mid z_t,t\right) \right) \,dt \right].
 $$
 [Remasking Discrete Diffusion Models with Inference-Time Scaling](https://arxiv.org/abs/2503.00307) goes into more derivation.
 
 For the LLaDA schedule
 
 $$
-\alpha_t=1-t,
-\qquad
-\alpha_t'=-1,
+\alpha_t=1-t, \qquad \alpha_t'=-1,
 $$
 
 so
 
 $$
-\frac{-\alpha_t'}{1-\alpha_t}
-=
-\frac{1}{t}.
+\frac{-\alpha_t'}{1-\alpha_t} = \frac{1}{t}.
 $$
 
 This gives the LLaDA training objective
 
 $$
-\boxed{
-\mathcal{L}(\theta)
-=
--\mathbb{E}_{t,x_0,z_t}\!\left[
-\frac{1}{t}
-\sum_{i=1}^{S}
-\mathbf{1}\!\left[z_t^{(i)}=m\right]
-\log p_\theta\!\left(x_0^{(i)}\mid z_t\right)
-\right]
-}
+\boxed{ \mathcal{L}(\theta) = -\mathbb{E}_{t,x_0,z_t}\!\left[ \frac{1}{t} \sum_{i=1}^{S} \mathbf{1}\!\left[z_t^{(i)}=m\right] \log p_\theta\!\left(x_0^{(i)}\mid z_t\right) \right] }
 $$
 
 with
@@ -576,9 +413,7 @@ $$
 Inference begins from
 
 $$
-z_1
-=
-[\text{prompt},\underbrace{m,\ldots,m}_{G\text{ response positions}}].
+z_1 = [\text{prompt},\underbrace{m,\ldots,m}_{G\text{ response positions}}].
 $$
 
 The response region is initially fully masked.
@@ -586,11 +421,7 @@ The response region is initially fully masked.
 At a reverse step from $t$ to $s<t$, the model produces distributions for all currently masked positions in one forward pass. Under the LLaDA schedule $\alpha_t=1-t$, the probability that a position masked at time $t$ becomes visible by time $s$ is
 
 $$
-\frac{\alpha_s-\alpha_t}{1-\alpha_t}
-=
-\frac{(1-s)-(1-t)}{t}
-=
-\frac{t-s}{t}.
+\frac{\alpha_s-\alpha_t}{1-\alpha_t} = \frac{(1-s)-(1-t)}{t} = \frac{t-s}{t}.
 $$
 
 The fraction that should remain masked is therefore
@@ -633,11 +464,7 @@ For simplicity, the main contrast here is between **autoregressive generation wi
 In ordinary AR decoding, prefill processes the prompt once and stores the key and value projections from every layer. The KV cache contains two tensors, keys and values, so its memory is approximately
 
 $$
-\boxed{
-M_{\mathrm{KV}}^{\mathrm{AR}}
-=
-2bBNS h_{kv}d_h
-}
+\boxed{ M_{\mathrm{KV}}^{\mathrm{AR}} = 2bBNS h_{kv}d_h }
 $$
 > The 2 is to accomodate for key and query.
 
@@ -658,9 +485,7 @@ $$
 The model computes activations for that new token and attends to the already-cached keys and values. The dominant per-layer activation terms are therefore roughly token-sized, for example
 
 $$
-M_{\mathrm{act}}^{\mathrm{AR}}
-=
-\mathcal{O}(B d_{\mathrm{ff}})
+M_{\mathrm{act}}^{\mathrm{AR}} = \mathcal{O}(B d_{\mathrm{ff}})
 $$
 
 for the feed-forward intermediates, while attention reads the $\mathcal{O}(S)$ KV cache.
@@ -681,39 +506,26 @@ but fused kernels such as [FlashAttention](https://arxiv.org/abs/2205.14135) avo
 Now consider a diffusion denoising step $k$. Let
 
 $$
-z_{t_k}^{1:S}
-=
-\left(z_{t_k}^{(1)},\ldots,z_{t_k}^{(S)}\right)
+z_{t_k}^{1:S} = \left(z_{t_k}^{(1)},\ldots,z_{t_k}^{(S)}\right)
 $$
 
 be the entire partially masked sequence, and write the hidden state of position $j$ at layer $\ell$ as
 
 $$
-h_j^{(\ell,k)}
-=
-f_\ell\!\left(z_{t_k}^{1:S}\right).
+h_j^{(\ell,k)} = f_\ell\!\left(z_{t_k}^{1:S}\right).
 $$
 >$f_l$  represents transformer computation.
 
 Collecting all token states:
 
 $$
-H^{(\ell,k)}
-=
-\begin{bmatrix}
-h_1^{(\ell,k)}\\
-\vdots\\
-h_S^{(\ell,k)}
-\end{bmatrix}
-\in\mathbb{R}^{S\times d}.
+H^{(\ell,k)} = \begin{bmatrix} h_1^{(\ell,k)}\\ \vdots\\ h_S^{(\ell,k)} \end{bmatrix} \in\mathbb{R}^{S\times d}.
 $$
 
 The corresponding keys and values are
 
 $$
-K^{(\ell,k)}=H^{(\ell-1,k)}W_K^{(\ell)},
-\qquad
-V^{(\ell,k)}=H^{(\ell-1,k)}W_V^{(\ell)}.
+K^{(\ell,k)}=H^{(\ell-1,k)}W_K^{(\ell)}, \qquad V^{(\ell,k)}=H^{(\ell-1,k)}W_V^{(\ell)}.
 $$
 
 For DLLMs, we use bidirectional attention. If even one masked token changes between two denoising iterations,
@@ -731,9 +543,7 @@ $$
 for many positions $j$. Consequently,
 
 $$
-K^{(\ell,k+1)}\neq K^{(\ell,k)},
-\qquad
-V^{(\ell,k+1)}\neq V^{(\ell,k)}.
+K^{(\ell,k+1)}\neq K^{(\ell,k)}, \qquad V^{(\ell,k+1)}\neq V^{(\ell,k)}.
 $$
 
 So an AR-style KV cache is not reusable in vanilla full-sequence dLLM decoding.
@@ -741,14 +551,7 @@ So an AR-style KV cache is not reusable in vanilla full-sequence dLLM decoding.
 Instead, each denoising iteration performs another forward pass over the full sequence. A useful schematic peak-activation model is
 
 $$
-M_{\mathrm{act}}^{\mathrm{dLLM}}
-\approx
-bB\left(
-    c_1Sd
-    +c_2Sd_{\mathrm{ff}}
-    +c_3S(h_q+2h_{kv})d_h
-\right)
-+M_{\mathrm{attn}},
+M_{\mathrm{act}}^{\mathrm{dLLM}} \approx bB\left( c_1Sd +c_2Sd_{\mathrm{ff}} +c_3S(h_q+2h_{kv})d_h \right) +M_{\mathrm{attn}},
 $$
 
 where the constants $c_1,c_2,c_3$ depend on the implementation and $M_{\mathrm{attn}}$ is the attention-kernel workspace. $c_1,c_2,c_3$ correspond to the residuals, MLP and QKV respectively.
@@ -756,17 +559,13 @@ where the constants $c_1,c_2,c_3$ depend on the implementation and $M_{\mathrm{a
 Ignoring constants,
 
 $$
-M_{\mathrm{act}}^{\mathrm{dLLM}}
-=
-\mathcal{O}(BSd),
+M_{\mathrm{act}}^{\mathrm{dLLM}} = \mathcal{O}(BSd),
 $$
 
 whereas the active-token activation footprint of one AR decoding step is roughly
 
 $$
-M_{\mathrm{act}}^{\mathrm{AR}}
-=
-\mathcal{O}(Bd).
+M_{\mathrm{act}}^{\mathrm{AR}} = \mathcal{O}(Bd).
 $$
 
 AR decoding still has an $\mathcal{O}(S)$ persistent KV cache, but that state is reusable. Vanilla diffusion repeatedly recomputes sequence-wide activations.
@@ -778,9 +577,7 @@ AR decoding still has an $\mathcal{O}(S)$ persistent KV cache, but that state is
 For one AR decoding step, a rough per-layer FLOP model is
 
 $$
-C_{\mathrm{AR,step}}
-=
-\mathcal{O}(d^2+Sd),
+C_{\mathrm{AR,step}} = \mathcal{O}(d^2+Sd),
 $$
 
 where $d^2$ represents the projection/MLP work and $Sd$ represents attention against the existing context.
@@ -788,33 +585,19 @@ where $d^2$ represents the projection/MLP work and $Sd$ represents attention aga
 Generating $G$ tokens therefore costs approximately
 
 $$
-C_{\mathrm{AR}}
-=
-\mathcal{O}\!\left(
-    NGd^2
-    +
-    Nd\sum_{j=1}^{G}(C+j)
-\right).
+C_{\mathrm{AR}} = \mathcal{O}\!\left( NGd^2 + Nd\sum_{j=1}^{G}(C+j) \right).
 $$
 
 A vanilla dLLM full-sequence pass costs roughly
 
 $$
-C_{\mathrm{dLLM,pass}}
-=
-\mathcal{O}\!\left(
-    NSd^2+NS^2d
-\right).
+C_{\mathrm{dLLM,pass}} = \mathcal{O}\!\left( NSd^2+NS^2d \right).
 $$
 
 With $k$ denoising iterations,
 
 $$
-C_{\mathrm{dLLM}}
-=
-\mathcal{O}\!\left(
-    kNSd^2+kNS^2d
-\right).
+C_{\mathrm{dLLM}} = \mathcal{O}\!\left( kNSd^2+kNS^2d \right).
 $$
 
 Let
@@ -826,11 +609,7 @@ $$
 be the average number of response tokens finalized per denoising iteration. If we look only at projection/MLP work and ignore attention, the ratio is
 
 $$
-\frac{C_{\mathrm{dLLM}}}{C_{\mathrm{AR}}}
-\approx
-\frac{kS}{G}
-=
-\frac{S}{r}.
+\frac{C_{\mathrm{dLLM}}}{C_{\mathrm{AR}}} \approx \frac{kS}{G} = \frac{S}{r}.
 $$
 
 So merely predicting multiple tokens in parallel is not enough. The model must commit enough correct tokens per iteration to compensate for repeatedly evaluating a much larger active sequence.
@@ -839,9 +618,7 @@ So merely predicting multiple tokens in parallel is not enough. The model must c
 The [JAX-ML Scaling Book](https://jax-ml.github.io/scaling-book/inference/) gives the arithmetic intensity of attention, in a simplified multi-head setting, as
 
 $$
-\text{AI}_{\mathrm{attn}}
-\approx
-\frac{ST}{S+T},
+\text{AI}_{\mathrm{attn}} \approx \frac{ST}{S+T},
 $$
 
 where $T$ is the query length and $S$ is the key/value length.
@@ -849,9 +626,7 @@ where $T$ is the query length and $S$ is the key/value length.
 For autoregressive generation,
 
 $$
-T=1,
-\qquad
-S\gg 1,
+T=1, \qquad S\gg 1,
 $$
 
 so
@@ -886,13 +661,7 @@ At the same time, D2F does not require each preceding block to be completely den
 If $A$ is the number of tokens in the currently active block pipeline and $S_{\mathrm{completed}}$ is the length of the completed prefix, a useful memory decomposition is
 
 $$
-M_{\mathrm{peak}}
-\approx
-M_{\mathrm{weights}}
-+
-M_{\mathrm{KV}}(S_{\mathrm{completed}})
-+
-M_{\mathrm{act}}(A),
+M_{\mathrm{peak}} \approx M_{\mathrm{weights}} + M_{\mathrm{KV}}(S_{\mathrm{completed}}) + M_{\mathrm{act}}(A),
 $$
 
 with
@@ -918,9 +687,7 @@ $$
 toward
 
 $$
-\mathcal{O}(BWd_{\mathrm{ff}}),
-\qquad
-W\ll S.
+\mathcal{O}(BWd_{\mathrm{ff}}), \qquad W\ll S.
 $$
 
 ---
@@ -930,13 +697,7 @@ $$
 The mathematics of masked diffusion is neat:
 
 $$
-\text{clean token}
-\longrightarrow
-\text{masking process}
-\longrightarrow
-\text{weighted masked-token cross entropy}
-\longrightarrow
-\text{iterative parallel unmasking}.
+\text{clean token} \longrightarrow \text{masking process} \longrightarrow \text{weighted masked-token cross entropy} \longrightarrow \text{iterative parallel unmasking}.
 $$
 
 Much of the recent inference work is converging on hybrid designs: blockwise causal structure, partial KV reuse, active recomputation windows, adaptive token commitment etc.
