@@ -7,7 +7,7 @@ description: "Addressing AI scepticism"
 ---
 
 # **A hesitant way forward: My thoughts on current AI scepticism**
-> ## _“When falsehood can look so like the truth, who can assure themselves of certain happiness” — Mary Shelly, “Frankenstein.”_
+> ## _“When falsehood can look so like the truth, who can assure themselves of certain happiness” — Mary Shelley, “Frankenstein.”_
 
 Recently, I held discussions with a few friends concerning their “AI opinions”, and I got a lot of/from them, 
 ranging from total hatred to unrestrained acceptance. My personal opinions (discussed here) are much more nuanced than these extremes, 
