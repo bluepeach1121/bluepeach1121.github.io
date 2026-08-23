@@ -1,18 +1,16 @@
-
 ---
-title: A Summary of _The Lantern of Lost Memories_
+title: A Summary of The _Lantern of Lost Memories_
 date: 2026-08-23 
 categories: [Literature, Book Review]
 tags: [A book I like]
 description: "Summary of The Lantern of Lost Memories"
-
 ---
 
 # The Lantern of Lost Memories
 
 > “Anyway, the phrase 'if only' meant nothing in life. He was the product of his choices, and that was all there was to it.” ~ Sanaka Hiiragi
 
-About 7 months ago, I read Sanaka Hiiragi's _The Lantern of Lost Memory_. A book whose imprint hasn't faded from my mind since. The book revolves around a room on the boundary of life and the afterlife where incoming visitors (who just died) rewatch bits of their lives in a spinning lantern. They also get a chance to take a picture of a single important moment from their past life. The warden of this room is the quaint Mr. Hirasaka, who has no memories of his past life except a picture that none of his visitors seem to recall: a picture of him in front of a leafy background. We also meet Yama, who delivers the parcel of the visitors memories to Mr. Hirasaka. In about 200 pages, Hiiragi gives us three visitors' navigating the memories of their past life through this space. We see them carefully sift through their lives as they talk through what was and what could've been.
+About 7 months ago, I read Sanaka Hiiragi's _The Lantern of Lost Memory_. A book whose imprint hasn't faded from my mind since. The book revolves around a room on the boundary of life and the afterlife where incoming visitors (who just died) rewatch bits of their lives in a spinning lantern. They also get a chance to take a picture of a single important moment from their past life. The warden of this room is the quaint Mr. Hirasaka, who has no memories of his past life except a picture that none of his visitors seem to recall: a picture of him in front of a leafy background. We also meet Yama, who delivers the parcel of the visitors' memories to Mr. Hirasaka. In about 200 pages, Hiiragi gives us three visitors navigating the memories of their past life through this space. We see them carefully sift through their lives as they talk through what was and what could've been.
 
 ### Spoilers ahead
 
