@@ -1,5 +1,5 @@
 ---
-title: A Summary of The _Lantern of Lost Memories_
+title: A Summary of The Lantern of Lost Memories
 date: 2026-08-23 
 categories: [Literature, Book Review]
 tags: [A book I like]
