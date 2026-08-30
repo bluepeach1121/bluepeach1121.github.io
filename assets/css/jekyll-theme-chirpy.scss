@@ -1,0 +1,33 @@
+---
+---
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}'
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* =========================================
+   Obsidian-style notes / blockquotes
+   ========================================= */
+
+.content blockquote:not([class*='prompt-']) {
+  color: var(--text-color);
+  background: transparent;
+  border-left: 3px solid var(--link-color);
+  padding-left: 1rem;
+}
+
+.content blockquote:not([class*='prompt-']) p,
+.content blockquote:not([class*='prompt-']) li {
+  color: inherit;
+}
+
+.content blockquote:not([class*='prompt-']) > :last-child {
+  margin-bottom: 0;
+}
