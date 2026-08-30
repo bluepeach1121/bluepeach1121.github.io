@@ -10,10 +10,10 @@ math: True
 
 # Diffusion Language Model and their inference
 ## Introduction
-A few months ago, I read the [jax-ml](https://jax-ml.github.io/scaling-book/) book and wanted to write something from it then I came across a blog by inception AI where they introduced some sort of diffusion Language models as an alternative to the usual autoregressive LLMs. I started writing this blog the day I saw the tweet of Lilian Weng resigning from thinking machines. I remembered that I used to visit her blog a lot to learn about ML. Given that I had also read the jax-ml book and was interested in diffusion language model, this just felt like the next path to pursue. I took a about ten days off due to travel and changing apartments but thankfully I'm done.
+A few months ago, I read the [jax-ml](https://jax-ml.github.io/scaling-book/) book and wanted to write something from it then I came across a blog by inception AI where they introduced some sort of diffusion Language models as an alternative to the usual autoregressive LLMs. I started writing this blog the day I saw the tweet of Lilian Weng resigning from Thinking Machines. I remembered that I used to visit her blog a lot to learn about ML. Given that I had also read the jax-ml book and was interested in diffusion language models, this just felt like the next path to pursue. I took about ten days off due to travel and changing apartments but thankfully I'm done.
 
 
-## A Brief Math Overview: from Diffusion to DLMs to DLM Inference
+## A Math Overview: from Diffusion to DLMs to DLM Inference
 
 A forward diffusion process samples a datapoint $x_0$ and gradually adds noise to corrupt the data in $T$ steps over timestep $t = 0$ to $t = 1$. We will define the final corrupted data as $z_T$.
 Nearly all modern diffusion processes use a gaussian forward process (modelled as):
@@ -618,7 +618,7 @@ $$
 $\theta$ = model parameters
 $\Delta^V$ = probability simplex over the vocabulary
 $x_\theta^{(i)}$ = predicted clean-token distribution at position $i$.
->Note :A probability simplex is the set of all valid probability vectors over the vocabulary.
+>Note: A probability simplex is the set of all valid probability vectors over the vocabulary.
 >
 >$$
 >\Delta^V=\{p\in\mathbb R^V:p_v\ge0,\sum_{v=1}^{V}p=1\}
@@ -1017,7 +1017,7 @@ $$
 O(Bh_q q S)\simeq O(Bh_q S)
 $$
 
-> A fused kernel e.g. [FlashAttention, Tri Dao](https://arxiv.org/abs/2205.14135) avoids computing the full attention matrix in one chunk. Instead it processes it in tiles. But for simplicity sake, we'd stick to unfused attention.
+> A fused kernel e.g. [FlashAttention, Tri Dao](https://arxiv.org/abs/2205.14135) avoids computing the full attention matrix in one chunk. Instead it processes it in tiles. But for simplicity, we'd stick to unfused attention.
 
 ## Vanilla diffusion decoding
 
@@ -1099,7 +1099,7 @@ But for diffusion models $M_{act}^{dLLM}\propto BSd$. So Diffusion Language Mode
 
 ## Parallel prediction and speed.
 
-The approximate per layer cost for AR decoding step is
+The approximate per layer cost for an Auto-regressive decoding step is
 
 $$
 C_{AR,step}=O(d^2+Sd)
