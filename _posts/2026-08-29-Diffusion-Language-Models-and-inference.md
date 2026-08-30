@@ -1194,6 +1194,7 @@ M_{activation}^{APD}\approx O(BWd_{ff});\ W<<S
 $$
 
 > I didnt find a lot of papers that addressed the problem.  Likely because Diffusion Language Models are relatively new compared to Auto-regressive models.
+
 # Conclusion
 
 The entire process is pretty neat.
