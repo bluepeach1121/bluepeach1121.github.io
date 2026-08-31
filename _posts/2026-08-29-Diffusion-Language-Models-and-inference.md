@@ -154,11 +154,12 @@ $$
 ---
 
 ### Example
-Let $x_0$ be the original clean token before any data corruption. Let the vocabulary contain $V$ tokens, with $x_0$ represented as a $V$-dimensional one-hot vector:
+Let $x_0$ be our original clean token before any data corruption and let the vocabulary contain $V$ tokens, with $x_0$ represented as a $V$-dimensional one-hot vector:
 
 $$
 x_0 \in \{e_1,\ldots,e_V\}\subset\{0,1\}^V
 $$
+> Note, $\{e_1,...e_V\}$ are column vectors. Our example below uses them as row vectors though.
 
 Define the set of all valid one-hot token vectors as
 
@@ -454,7 +455,7 @@ $$
 {\LARGE\mathbf{\text{From Reverse Time SDE to Probablility Flow ODE}}}
 $$
 
-> Starting from the reverse-time SDE,
+> starting from the reverse-time SDE,
 >
 > $$
 > dx_t
@@ -466,7 +467,7 @@ $$
 > g(t)\,d\bar W_t,
 > $$
 >
-> The probability density evolves according to the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation)(comparing coefficients and plugging them in from Wikipedia)
+> The probability density evolves according to the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation)(comparing coefficients and plugging them in from Wikipedia link)
 >
 > $$
 > \frac{\partial p_t(x)}{\partial t}
@@ -626,9 +627,9 @@ $x_\theta^{(i)}$ = predicted clean-token distribution at position $i$.
 
 ---
 
-Previously, our clean token $x_0$ was represented by a one-hot vector e.g. $[0, 0, 1, 0, 0]$. But during generation our model prediction $x_\theta$ might have the form $[0.03,0.07,0.80,0.05,0.05]$ $\leftarrow$ (sums to 1).
+Previously, our clean token $x_0$ was represented by a one-hot vector e.g. $[0, 0, 1, 0, 0]$. But during generation our model prediction $x_\theta$ might have something like $[0.03,0.07,0.80,0.05,0.05]$ $\leftarrow$ (sums to 1).
 
->Note: A one-hot vector is located at the vertex of the probability. 
+>Note: A one-hot vector is located at the vertex of the probability. [link explaining probability simplex](https://www.localmaxradio.com/questions/what-is-a-probability-simplex)
 
 > A design choice is $\langle x_\theta, m \rangle = 0$ i.e. $x_\theta$ assigns zero probability to $[MASK]$. This is done by substituting the logit index corresponding to the [MASK] token with $-\infty$. This prevents the model from predicting $[MASK]$ as the final token.
 
@@ -974,7 +975,7 @@ Response: This is the year [MASK]
 Response: This is the year 2026
 ```
 
-## Parallel Inference and Memory
+## Parallel Inference & Memory
 
 This blog by Sebastian Raschka [Understanding and Coding the KV Cache in LLMs from Scratch](https://magazine.sebastianraschka.com/p/coding-the-kv-cache-in-llms) and the [jax-ml book](https://jax-ml.github.io/scaling-book/inference/) goes very in-depth into KV-Cache and its significance in inference. 
 
@@ -995,7 +996,7 @@ $h_q\Rightarrow$ No. of query head.
 In Autoregressive KV cache
 
 $$
-\text{Memory}_{\,kv}^{AR}=2bBNS h_{kv}d_h
+\text{Memory}_{kv}^{AR}=2bBNS h_{kv}d_h
 $$
 >Note: The 2 accounts for keys and values.
 
@@ -1097,9 +1098,9 @@ But for diffusion models $M_{act}^{dLLM}\propto BSd$. So Diffusion Language Mode
 
 > Note: AR decoding has a KV cache of size $O(S)$ which scales linearly with the context length, but it is a separate memory component.
 
-## Parallel prediction and speed.
+## Parallel prediction & speed.
 
-The approximate per layer cost for an Auto-regressive decoding step is
+The approximate per layer cost for Auto-regressive decoding step is
 
 $$
 C_{AR,step}=O(d^2+Sd)
@@ -1204,6 +1205,7 @@ Clean Token $\Rightarrow$ Masking $\Rightarrow$ Masked Token Crossentropy $\Righ
 Much of the recent inference work is converging on hybrid designs: blockwise causal structure, partial KV reuse, dynamic token commitment etc.
 
 Its going to be interesting to follow how this problem would be solved and maybe one day they can be a viable alternative to autoregressive models.
+I wrote an initial draft with pen and paper before transcribing it into mathjax and markdown. 
 
 ---
 
